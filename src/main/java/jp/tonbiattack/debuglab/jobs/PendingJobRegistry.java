@@ -15,7 +15,11 @@ public class PendingJobRegistry {
         if (!pendingJobIds.contains(jobId)) {
             return CancellationOutcome.NOT_FOUND;
         }
-        Integer removedJobId = pendingJobIds.remove(jobId);
+        boolean removed = pendingJobIds.remove(Integer.valueOf(jobId));
+        if (!removed) {
+            return CancellationOutcome.NOT_FOUND;
+        }
+        Integer removedJobId = jobId;
         cancellationHistory.add(removedJobId);
         return CancellationOutcome.CANCELLED;
     }
